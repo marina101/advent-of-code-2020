@@ -1,6 +1,8 @@
 def check_password(pwd)
-  count = pwd[:word].count(pwd[:letter])
-  count <= pwd[:max] && count >= pwd[:min]
+  count = 0
+  count += 1 if pwd[:word][pwd[:char_index1]] == pwd[:letter]
+  count += 1 if pwd[:word][pwd[:char_index2]] == pwd[:letter]
+  count == 1 ? true : false
 end
 
 def correct_password_count(list)
@@ -9,8 +11,8 @@ def correct_password_count(list)
     tokens = line.split("\s")
     pwd = {
       letter: tokens[1].gsub(":", ""),
-      min: tokens[0].split("-")[0].to_i,
-      max: tokens[0].split("-")[1].to_i,
+      char_index1: (tokens[0].split("-")[0].to_i - 1),
+      char_index2: (tokens[0].split("-")[1].to_i - 1),
       word: tokens[2]
     }
     correct_count += 1 if check_password(pwd)
